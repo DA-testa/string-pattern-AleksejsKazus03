@@ -11,7 +11,7 @@ def read_input():
         with open(f"tests/{filename}", "r") as f:
             pattern = f.readline().strip()
             text = f.readline().strip()
-    elif source == 'I':
+    else:
         pattern = input().rstrip()
         text = input().rstrip()
 
