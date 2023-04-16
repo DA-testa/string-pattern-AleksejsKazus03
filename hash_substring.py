@@ -9,7 +9,7 @@ def read_input():
     # second line is text in which to look for pattern
     if source == 'F':
         f=input()
-        with open("tests/" + f, 'r') as f:
+        with open(f"tests/{filename}", "r") as f:
             pattern = f.readline().strip()
             text = f.readline().strip()
     else:
