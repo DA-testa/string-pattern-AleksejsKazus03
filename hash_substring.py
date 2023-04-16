@@ -1,4 +1,5 @@
 # python3
+    # Aleksejs Kazus 221RDB105
 import random
 def read_input():
     # this function acquires input both from keyboard and file
