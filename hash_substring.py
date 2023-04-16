@@ -8,7 +8,7 @@ def read_input():
     # first line is pattern
     # second line is text in which to look for pattern
     if source == 'F':
-        with open('06', 'r') as f:
+        with open('06.txt', 'r') as f:
             pattern = f.readline().strip()
             text = f.readline().strip()
     else:
