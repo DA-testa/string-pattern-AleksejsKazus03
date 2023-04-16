@@ -8,11 +8,10 @@ def read_input():
     # first line is pattern
     # second line is text in which to look for pattern
     if source == 'F':
-        f=input()
         with open(f"tests/{filename}", "r") as f:
             pattern = f.readline().strip()
             text = f.readline().strip()
-    else:
+    elif source == 'I':
         pattern = input().rstrip()
         text = input().rstrip()
 
