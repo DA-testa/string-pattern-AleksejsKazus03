@@ -23,21 +23,36 @@ def print_occurrences(output):
     print(' '.join(map(str, output)))
 
 def get_occurrences(pattern, text):
-    # this function finds the occurrences using Rabin Karp algorithm
-    p_len = len(pattern)
-    t_len = len(text)
-    prime = 10 ** 9 + 7
-    multiplier = 31
-    power_mod = pow(multiplier, p_len - 1, prime)
-    pattern_hash = sum(ord(pattern[i]) * pow(multiplier, i, prime) for i in range(p_len)) % prime
-    text_hash = sum(ord(text[i]) * pow(multiplier, i, prime) for i in range(p_len)) % prime
+    # This function finds the occurrences of pattern in text using Rabin Karp's algorithm.
+
+    p = 1000000007  # A large prime number
+    x = random.randint(1, p - 1)  # A random integer between 1 and p-1
     result = []
-    if pattern_hash == text_hash and pattern == text[:p_len]:
-        result.append(0)
-    for i in range(1, t_len - p_len + 1):
-        text_hash = (text_hash - ord(text[i - 1]) * power_mod) % prime
-        text_hash = (text_hash * multiplier + ord(text[i + p_len - 1])) % prime
-        if pattern_hash == text_hash and pattern == text[i:i + p_len]:
+
+    def poly_hash(s):
+        """Function to calculate the polynomial hash of string s."""
+        hash_value = 0
+        for char in reversed(s):
+            hash_value = (hash_value * x + ord(char)) % p
+        return hash_value
+
+    # Precompute hashes for all substrings of length |pattern| in text
+    h = [0] * (len(text) - len(pattern) + 1)
+    h[-1] = poly_hash(text[-len(pattern):])
+    y = 1
+    for i in range(len(pattern)):
+        y = (y * x) % p
+    for i in range(len(text) - len(pattern) - 1, -1, -1):
+        h[i] = (x * h[i + 1] + ord(text[i]) - y * ord(text[i + len(pattern)])) % p
+
+    # Calculate the hash of pattern
+    pattern_hash = poly_hash(pattern)
+
+    # Compare the hash of pattern to the hashes of all substrings of length |pattern| in text
+    for i in range(len(text) - len(pattern) + 1):
+        if pattern_hash != h[i]:
+            continue
+        if text[i:i + len(pattern)] == pattern:
             result.append(i)
 
     return result
