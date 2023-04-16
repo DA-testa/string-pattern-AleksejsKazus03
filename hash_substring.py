@@ -1,5 +1,5 @@
 # python3
-
+import random
 def read_input():
     # this function acquires input both from keyboard and file
     # as before, use capital i (input from keyboard) and capital f (input from file) to choose which input type will follow
